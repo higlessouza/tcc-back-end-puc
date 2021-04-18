@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>tcc_back_end_puc</RootNamespace>
+    <UserSecretsId>559a75db-925a-42bb-9bad-2de7ca091c5d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
