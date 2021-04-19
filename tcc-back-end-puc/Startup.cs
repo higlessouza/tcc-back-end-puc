@@ -7,8 +7,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using tcc_back_end_puc.Domain;
+using tcc_back_end_puc.Domain.Repositories;
+using tcc_back_end_puc.Infrastructure.Common;
+using tcc_back_end_puc.Infrastructure.Repositories;
 
 namespace tcc_back_end_puc
 {
@@ -36,7 +42,30 @@ namespace tcc_back_end_puc
 
             services.AddControllers();
 
+            RegisterDataBase(services);
+
+            RegisterRepositories(services);
+
             services.AddSwaggerGen();
+        }
+
+        public void RegisterRepositories(IServiceCollection services)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        }
+
+        public void RegisterDataBase(IServiceCollection services)
+        {
+            var stringConexaoSqlServer = Parametros.SqlServer.Banco
+             .Replace("{USR}", Parametros.SqlServer.Usuario)
+             .Replace("{PASSWORD}", Parametros.SqlServer.Senha);
+
+            services.AddScoped<IDbConnection, SqlConnection>(scope =>
+            {
+                var conexao = new SqlConnection(stringConexaoSqlServer);
+                return conexao;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
