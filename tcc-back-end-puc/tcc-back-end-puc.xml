@@ -1,0 +1,320 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>tcc-back-end-puc</name>
+    </assembly>
+    <members>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.Get(System.Int32)">
+            <summary>
+            Busca um anuncio pelo Id
+            </summary>
+            <param name="id">Identificador do anuncio</param>
+            <returns>Anuncio</returns>        
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.ListarAnunciosAsync">
+            <summary>
+            Listar anuncios 
+            </summary>
+            <returns>Lista de anuncios</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.CriarAsync(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
+            <summary>
+            Criar anuncio 
+            </summary>
+            <param name="anuncio">Usuário a ser criado</param>
+            <returns>Usuário criado</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.AtualizarAsync(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
+            <summary>
+            Atualizar informações do anuncio
+            </summary>
+            <param name="anuncio"> Anuncio com dados atualizados</param>
+            <returns>anuncio atualizado</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.DeletarAsync(System.Int32)">
+            <summary>
+            Apaga um anuncio de acordo com o identificador
+            </summary>
+            <param name="id">Identificador do anuncio a ser apagado</param>
+            <returns>Bool que informa se o anuncio foi apagado</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.GetAsync(System.Int32)">
+            <summary>
+            Obter usuário pelo ID
+            </summary>
+            <param name="id">Identificador do usuário</param>
+            <returns>Usuário</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.ListarUsuariosAsync">
+            <summary>
+            Listar usuários 
+            </summary>
+            <returns>Lista de usuários</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.Login(System.String,System.String)">
+            <summary>
+            Realiza login de um usuário
+            </summary>
+            <returns>Lista de usuários</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.CriarAsync(tcc_back_end_puc.Domain.Entities.Usuarios.Usuario)">
+            <summary>
+            Criar usuário 
+            </summary>
+            <param name="usuario">Usuário a ser criado</param>
+            <returns>Usuário criado</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.AtualizarAsync(tcc_back_end_puc.Domain.Entities.Usuarios.Usuario)">
+            <summary>
+            Atualizar informações do usuário
+            </summary>
+            <param name="usuario"> Usuário com dados atualizados</param>
+            <returns>usuário atualizado</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.DeletarAsync(System.Int32)">
+            <summary>
+            Apaga um usuário de acordo com o identificador
+            </summary>
+            <param name="identificador">Identificador do usuário a ser apagado</param>
+            <returns>Bool que informa se o usuário foi apagado</returns>
+        </member>
+        <member name="T:tcc_back_end_puc.Domain.Enum.StatusAprovacaoAnuncio">
+            <summary>
+            Enum de Status aprovacao anuncio
+            </summary>
+        </member>
+        <member name="T:tcc_back_end_puc.Domain.Enum.TipoUsuario">
+            <summary>
+            Enum de TipoUsuario
+            </summary>
+        </member>
+        <member name="T:tcc_back_end_puc.Domain.Parametros.SqlServer">
+            <summary>
+            Parâmetros do Sql Server
+            </summary>
+        </member>
+        <member name="P:tcc_back_end_puc.Domain.Parametros.SqlServer.Banco">
+            <summary>
+            string de conexão do banco de dados
+            </summary>
+        </member>
+        <member name="P:tcc_back_end_puc.Domain.Parametros.SqlServer.Usuario">
+            <summary>
+            Usuário do banco de dados
+            </summary>
+        </member>
+        <member name="P:tcc_back_end_puc.Domain.Parametros.SqlServer.Senha">
+            <summary>
+            Senha do banco de dados
+            </summary>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.ObterPorIdentificador(System.Int32)">
+            <summary>
+            Obtem um anuncio pelo identificador
+            </summary>
+            <param name="identificador"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.InserirAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
+            <summary>
+            Insere um anuncio
+            </summary>
+            <param name="anuncio"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.InserirTopico(tcc_back_end_puc.Domain.Entities.Anuncios.Topico)">
+            <summary>
+            Insere um Topico
+            </summary>
+            <param name="topico"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.InserirImagem(tcc_back_end_puc.Domain.Entities.Anuncios.Imagem)">
+            <summary>
+            Insere um Topico
+            </summary>
+            <param name="topico"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.InserirAvaliacao(tcc_back_end_puc.Domain.Entities.Anuncios.Avaliacao)">
+            <summary>
+            Insere um Topico
+            </summary>
+            <param name="topico"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.AtualizarAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
+            <summary>
+            Atualiza um usuário
+            </summary>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.ListarAnuncios">
+            <summary>
+            Lista todos os usuários
+            </summary>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.DeletarAnuncio(System.Int32)">
+            <summary>
+            Deleta usuário 
+            </summary>
+        </member>
+        <member name="T:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository">
+            <summary>
+            Interface para repositorio de usuarios
+            </summary>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository.ObterPorIdentificador(System.Int32)">
+            <summary>
+            Obtem usuario pelo identificador 
+            </summary>
+            <param name="identificador">identificador do usuario</param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository.InserirUsuario(tcc_back_end_puc.Domain.Entities.Usuarios.Usuario)">
+            <summary>
+            Insere um usuario
+            </summary>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository.AtualizarUsuario(tcc_back_end_puc.Domain.Entities.Usuarios.Usuario)">
+            <summary>
+            Atualiza um usuário
+            </summary>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository.ListarUsuarios">
+            <summary>
+            Lista todos os usuários
+            </summary>
+            <returns>Lista de usuários</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository.DeletarUsuario(System.Int32)">
+            <summary>
+            Deleta usuário 
+            </summary>
+            <param name="identificador">Identificador usuário</param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository.RealizarLogin(System.String,System.String)">
+            <summary>
+            Realiza login de acordo com as informações enviadas 
+            </summary>
+            <param name="email"></param>
+            <param name="senha"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.ObterPorIdentificador(System.Int32)">
+            <summary>
+            Obtem usuario pelo identificador 
+            </summary>
+            <param name="identificador">identificador do usuario</param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.InserirAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
+            <summary>
+            Insere um anuncio
+            </summary>
+            <param name="anuncio"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.InserirTopico(tcc_back_end_puc.Domain.Entities.Anuncios.Topico)">
+            <summary>
+            Insere um Topico
+            </summary>
+            <param name="topico"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.InserirImagem(tcc_back_end_puc.Domain.Entities.Anuncios.Imagem)">
+            <summary>
+            Insere um Topico
+            </summary>
+            <param name="topico"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.InserirAvaliacao(tcc_back_end_puc.Domain.Entities.Anuncios.Avaliacao)">
+            <summary>
+            Insere um Topico
+            </summary>
+            <param name="topico"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.AtualizarAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
+            <summary>
+            Atualiza um usuário
+            </summary>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.InserirListasDoAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
+            <summary>
+            Insere Topicos, Imagens e Avaliacoes do anuncio
+            </summary>
+            <param name="idAnuncio"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.ResetarListasDoAnuncio(System.Int32)">
+            <summary>
+            Apaga Topicos, Imagens e Avaliacoes do anuncio
+            </summary>
+            <param name="idAnuncio"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.ListarAnuncios">
+            <summary>
+            Lista todos os usuários
+            </summary>
+            <returns>Lista de usuários</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.DeletarAnuncio(System.Int32)">
+            <summary>
+            Deleta usuário 
+            </summary>
+            <param name="identificador">Identificador usuário</param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.ObterPorIdentificador(System.Int32)">
+            <summary>
+            Obtem usuario pelo identificador 
+            </summary>
+            <param name="identificador">identificador do usuario</param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.InserirUsuario(tcc_back_end_puc.Domain.Entities.Usuarios.Usuario)">
+            <summary>
+            Insere um usuario
+            </summary>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.AtualizarUsuario(tcc_back_end_puc.Domain.Entities.Usuarios.Usuario)">
+            <summary>
+            Atualiza um usuário
+            </summary>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.ListarUsuarios">
+            <summary>
+            Lista todos os usuários
+            </summary>
+            <returns>Lista de usuários</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.DeletarUsuario(System.Int32)">
+            <summary>
+            Deleta usuário 
+            </summary>
+            <param name="identificador">Identificador usuário</param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.RealizarLogin(System.String,System.String)">
+            <summary>
+            Realiza login de acordo com as informações enviadas 
+            </summary>
+            <param name="email"></param>
+            <param name="senha"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

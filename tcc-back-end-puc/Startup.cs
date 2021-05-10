@@ -5,10 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain;
@@ -47,6 +49,13 @@ namespace tcc_back_end_puc
             RegisterRepositories(services);
 
             services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                var filePath = Path.Combine(AppContext.BaseDirectory, "tcc-back-end-puc.xml");
+                c.IncludeXmlComments(filePath);
+            });
+
+
         }
 
         public void RegisterRepositories(IServiceCollection services)
