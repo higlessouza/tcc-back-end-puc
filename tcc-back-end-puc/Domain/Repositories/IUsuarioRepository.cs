@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using tcc_back_end_puc.Domain.Entities.Usuario;
+using tcc_back_end_puc.Domain.Entities.Usuarios;
 
 namespace tcc_back_end_puc.Domain.Repositories
 {

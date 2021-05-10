@@ -1,15 +1,12 @@
 ﻿namespace tcc_back_end_puc.Domain.Enum
 {
-    public class TipoUsuario
-    {
         /// <summary>
-        /// Enum de estadus da cobrança
+        /// Enum de TipoUsuario
         /// </summary>
-        public enum StatusCobranca
+        public enum TipoUsuario
         {
-            Comum,
-            Moderador,
-            Adiministrador,
-        }
-    }
+            Comum =0,
+            Moderador=1,
+            Adiministrador=2,
+        }   
 }

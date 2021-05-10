@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using tcc_back_end_puc.Domain.Entities.Usuario;
+using tcc_back_end_puc.Domain.Entities.Usuarios;
 using tcc_back_end_puc.Domain.Repositories;
 
 namespace tcc_back_end_puc.Controllers
@@ -39,7 +35,7 @@ namespace tcc_back_end_puc.Controllers
         /// <returns>Lista de usuários</returns>
         [HttpGet]
         [Route("ListarUsuarios")]
-        public async Task<ActionResult> ListarUsuáriosAsync()
+        public async Task<ActionResult> ListarUsuariosAsync()
         {
             var usuarios = await _usuarioRepository.ListarUsuarios();
             return Ok(JsonConvert.SerializeObject(usuarios));
@@ -53,8 +49,8 @@ namespace tcc_back_end_puc.Controllers
         [Route("Login")]
         public async Task<ActionResult> Login(string email, string senha)
         {
-            var usuarios = await _usuarioRepository.RealizarLogin(email,senha);
-            return Ok(JsonConvert.SerializeObject(usuarios));
+            var usuarioLogado = await _usuarioRepository.RealizarLogin(email,senha);
+            return Ok(JsonConvert.SerializeObject(usuarioLogado));
         }
 
         /// <summary>
@@ -75,7 +71,7 @@ namespace tcc_back_end_puc.Controllers
         /// </summary>
         /// <param name="usuario"> Usuário com dados atualizados</param>
         /// <returns>usuário atualizado</returns>
-        [HttpPost]
+        [HttpPatch]
         [Route("atualizar")]
         public async Task<ActionResult> AtualizarAsync(Usuario usuario)
         {
@@ -88,7 +84,7 @@ namespace tcc_back_end_puc.Controllers
         /// </summary>
         /// <param name="identificador">Identificador do usuário a ser apagado</param>
         /// <returns>Bool que informa se o usuário foi apagado</returns>
-        [HttpPost]
+        [HttpDelete]
         [Route("deletar")]
         public async Task<ActionResult> DeletarAsync(int identificador)
         {

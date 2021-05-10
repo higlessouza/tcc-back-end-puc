@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using tcc_back_end_puc.Domain.Entities.Usuario;
+using tcc_back_end_puc.Domain.Entities.Usuarios;
 using tcc_back_end_puc.Domain.Repositories;
+using tcc_back_end_puc.Infrastructure.DTO;
+using tcc_back_end_puc.Infrastructure.Mapper;
 using tcc_back_end_puc.Infrastructure.Repositories.Base;
 
 namespace tcc_back_end_puc.Infrastructure.Repositories
@@ -18,37 +20,85 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         #region Consultas 
         private const string SQL_INSERIR_USUARIO = @"
             Insert into Usuarios (
-                [Nome],
-                [Senha],
-                [Email],
-                [Tipo]
+                [Nome]
+                ,[Senha]        
+                ,[Email]        
+                ,[Tipo]         
+                ,[Facebook]     
+                ,[Linkedin]     
+                ,[Twitter]      
+                ,[CodigoPais]   
+                ,[CodigoCidade] 
+                ,[Telefone]     
+                ,[Rua]          
+                ,[Bairro]       
+                ,[Cidade]       
+                ,[Estado]       
+                ,[Pais]         
+                ,[Cep]          
                 )
             Values (
-                @nome,
-                @senha,
-                @email,
-                @tipo
+               @nome,
+               @senha,
+               @email,
+               @tipo,
+               @facebook,   
+               @linkedin,
+               @twitter,
+               @codigoPais,
+               @codigoCidade,
+               @telefone,
+               @rua,
+               @bairro,
+               @cidade,
+               @estado,
+               @pais,
+               @cep
             );
             SELECT SCOPE_IDENTITY();";
 
         private const string SQL_LISTAR_USUARIOS = @"
             SELECT
-                [Identificador],
-                [Nome],
-                [Senha],
-                [Email],
-                [Tipo]
+                [Identificador]
+                ,[Nome]
+                ,[Senha]
+                ,[Email]
+                ,[Tipo]
+                ,[Facebook]
+                ,[Linkedin]
+                ,[Twitter]
+                ,[CodigoPais]
+                ,[CodigoCidade]
+                ,[Telefone]
+                ,[Rua]
+                ,[Bairro]
+                ,[Cidade]
+                ,[Estado]
+                ,[Pais]
+                ,[Cep]
             FROM
                 Usuarios
             ";
 
         private const string SQL_OBTER_USUARIO = @"
             SELECT
-                [Identificador],
-                [Nome],
-                [Senha],
-                [Email],
-                [Tipo]
+                [Identificador]
+                ,[Nome]
+                ,[Senha]
+                ,[Email]
+                ,[Tipo]
+                ,[Facebook]
+                ,[Linkedin]
+                ,[Twitter]
+                ,[CodigoPais]
+                ,[CodigoCidade]
+                ,[Telefone]
+                ,[Rua]
+                ,[Bairro]
+                ,[Cidade]
+                ,[Estado]
+                ,[Pais]
+                ,[Cep]
             FROM
                 Usuarios
             WHERE 
@@ -60,7 +110,19 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 SET [Nome] = @nome,
                     [Senha] = @senha,
                     [Email] = @email,
-                    [Tipo] = @tipo
+                    [Tipo] = @tipo,
+                    [Facebook] = @facebook,   
+                    [Linkedin] = @linkedin,
+                    [Twitter] = @twitter,
+                    [CodigoPais] = @codigoPais,
+                    [CodigoCidade] = @codigoCidade,
+                    [Telefone] = @telefone,
+                    [Rua] = @rua,
+                    [Bairro] = @bairro,
+                    [Cidade] = @cidade,
+                    [Estado] = @estado,
+                    [Pais] = @pais,
+                    [Cep] = @cep
             WHERE 
                 [Identificador] = @identificador
             ;";
@@ -79,7 +141,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 Usuarios 
             WHERE 
                 [Email] = @email and
-                [Senha] = @senha
+                BINARY_CHECKSUM([Senha]) = BINARY_CHECKSUM(@senha)
             ";
         #endregion
 
@@ -93,8 +155,8 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             var parametros = CreateParameters
                 .Add("@identificador", identificador, DbType.Int32)
                 .GetParameters();
-            var usuario = await UnitOfWork.Connection.QuerySingleAsync<Usuario>(SQL_OBTER_USUARIO, parametros);
-            return usuario;
+            var usuarioDTO = await UnitOfWork.Connection.QuerySingleAsync<UsuarioDTO>(SQL_OBTER_USUARIO, parametros);
+            return usuarioDTO.ToUsuario();
         }
 
         /// <summary>
@@ -104,11 +166,24 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<Usuario> InserirUsuario(Usuario usuario)
         {
+            var usuarioDTO = usuario.ToUsuarioDTO();
             var parametros = CreateParameters
-               .Add("@nome", usuario.Nome, DbType.String)
-               .Add("@email", usuario.Email, DbType.String)
-               .Add("@senha", usuario.Senha, DbType.String)
-               .Add("@tipo", usuario.Tipo, DbType.Int32)
+                .Add("@nome", usuarioDTO.Nome, DbType.String)
+                .Add("@senha", usuarioDTO.Senha, DbType.String)
+                .Add("@email", usuarioDTO.Email, DbType.String)
+                .Add("@tipo", usuarioDTO.Tipo, DbType.Int32)
+                .Add("@facebook", usuarioDTO.Facebook, DbType.String)
+                .Add("@linkedin", usuarioDTO.Linkedin, DbType.String)
+                .Add("@twitter", usuarioDTO.Twitter, DbType.String)
+                .Add("@codigoPais", usuarioDTO.CodigoPais, DbType.Int32)
+                .Add("@codigoCidade", usuarioDTO.CodigoCidade, DbType.Int32)
+                .Add("@telefone", usuarioDTO.Telefone, DbType.Int32)
+                .Add("@rua", usuarioDTO.Rua, DbType.String)
+                .Add("@bairro", usuarioDTO.Bairro, DbType.String)
+                .Add("@cidade", usuarioDTO.Cidade, DbType.String)
+                .Add("@estado", usuarioDTO.Estado, DbType.String)
+                .Add("@pais", usuarioDTO.Pais, DbType.String)
+                .Add("@cep", usuarioDTO.Cep, DbType.String)
                .GetParameters();
 
             var identificador = await UnitOfWork.Connection.QuerySingleAsync<int>(SQL_INSERIR_USUARIO, parametros);
@@ -123,14 +198,27 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<Usuario> AtualizarUsuario(Usuario usuario)
         {
+            var usuarioDTO = usuario.ToUsuarioDTO();
             var parametros = CreateParameters
-                .Add("@nome", usuario.Nome, DbType.String)
-                 .Add("@senha", usuario.Senha, DbType.String)
-                .Add("@email", usuario.Email, DbType.String)             
-                .Add("@tipo", usuario.Tipo, DbType.Int32)
+                .Add("@nome", usuarioDTO.Nome, DbType.String)
+                .Add("@senha", usuarioDTO.Senha, DbType.String)
+                .Add("@email", usuarioDTO.Email, DbType.String)
+                .Add("@tipo", usuarioDTO.Tipo, DbType.Int32)
+                .Add("@facebook", usuarioDTO.Facebook, DbType.String)
+                .Add("@linkedin", usuarioDTO.Linkedin, DbType.String)
+                .Add("@twitter", usuarioDTO.Twitter, DbType.String)
+                .Add("@codigoPais", usuarioDTO.CodigoPais, DbType.Int32)
+                .Add("@codigoCidade", usuarioDTO.CodigoCidade, DbType.Int32)
+                .Add("@telefone", usuarioDTO.Telefone, DbType.Int32)
+                .Add("@rua", usuarioDTO.Rua, DbType.String)
+                .Add("@bairro", usuarioDTO.Bairro, DbType.String)
+                .Add("@cidade", usuarioDTO.Cidade, DbType.String)
+                .Add("@estado", usuarioDTO.Estado, DbType.String)
+                .Add("@pais", usuarioDTO.Pais, DbType.String)
+                .Add("@cep", usuarioDTO.Cep, DbType.String)
                 .Add("@identificador", usuario.Identificador, DbType.Int32)
                 .GetParameters();
-
+            parametros.RemoveUnused = true;
             await UnitOfWork.Connection.ExecuteAsync(SQL_ATUALIZAR_USUARIO, parametros);
             return usuario;
         }
@@ -141,9 +229,9 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns>Lista de usuários</returns>
         public async Task<IEnumerable<Usuario>> ListarUsuarios()
         {
-           
-            var usuarios = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_LISTAR_USUARIOS);
-            return usuarios.Parse<Usuario>();
+            var usuariosDB = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_LISTAR_USUARIOS);
+            var usuariosDTO = usuariosDB.Parse<UsuarioDTO>();
+            return usuariosDTO.Select(usuarioDTO => usuarioDTO.ToUsuario());
         }
 
         /// <summary>
@@ -169,14 +257,14 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<bool> RealizarLogin(string email, string senha)
         {
-            var parametros = CreateParameters 
+            var parametros = CreateParameters
               .Add("@email", email, DbType.String)
-              .Add("@senha", senha, DbType.String)     
+              .Add("@senha", senha, DbType.String)
               .GetParameters();
 
             var identificador = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_REALIZA_LOGIN, parametros);
             //TODO: Melhorar metodo
-            return identificador.Parse<int>().Count<int>()==1;
+            return identificador.Parse<int>().Count<int>() == 1;
         }
     }
 }

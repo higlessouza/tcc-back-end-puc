@@ -53,6 +53,7 @@ namespace tcc_back_end_puc
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IAnuncioRepository, AnuncioRepository>();
         }
 
         public void RegisterDataBase(IServiceCollection services)
