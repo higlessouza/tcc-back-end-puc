@@ -15,9 +15,9 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_TCC": "Data Source=tcc-data-base-puc.database.windows.net;Initial Catalog=tcc-data-base-puc;User Id={USR};Password={PASSWORD};Integrated Security=False;MultipleActiveResultSets=true;APP=tcc-back-end-puc",
-        "DB_TCC_USER": "tcc-user-data-base-puc",
-        "DB_TCC_PASSWORD": "32e29bef1cc44b8685c4547e34f7c8aF"
+        "DB_TCC": "Data Source=tcc-puc.database.windows.net;Initial Catalog=tcc-db-puc;User Id={USR};Password={PASSWORD};Integrated Security=False;MultipleActiveResultSets=true;APP=tcc-back-end-puc",
+        "DB_TCC_USER": "pucadmin",
+        "DB_TCC_PASSWORD": "tccpuc#2021"
       }
     },
     "tcc_back_end_puc": {
@@ -27,9 +27,9 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_TCC": "Data Source=tcc-data-base-puc.database.windows.net;Initial Catalog=tcc-data-base-puc;User Id={USR};Password={PASSWORD};Integrated Security=False;MultipleActiveResultSets=true;APP=tcc-back-end-puc",
-        "DB_TCC_USER": "tcc-user-data-base-puc",
-        "DB_TCC_PASSWORD": "32e29bef1cc44b8685c4547e34f7c8aF"
+        "DB_TCC": "Data Source=tcc-data-base-puc.database.windows.net;Initial Catalog=tcc-db-puc;User Id={USR};Password={PASSWORD};Integrated Security=False;MultipleActiveResultSets=true;APP=tcc-back-end-puc",
+        "DB_TCC_USER": "pucadmin",
+        "DB_TCC_PASSWORD": "tccpuc#2021"
       }
     }
   }
