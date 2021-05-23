@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -22,13 +23,15 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 [Titulo]
                 ,[DataPublicacao]
                 ,[Preco]
-                ,[Aprovado]        
+                ,[Aprovado]
+                ,[FkIdentificadorUsuario]
                 )
             Values (
                 @titulo
                 ,@dataPublicacao
                 ,@preco
-                ,@aprovado       
+                ,@aprovado 
+                ,@fkIdentificadorUsuario
             );
             SELECT SCOPE_IDENTITY();";
 
@@ -38,7 +41,8 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[Titulo]
                 ,[DataPublicacao]
                 ,[Preco]
-                ,[Aprovado]   
+                ,[Aprovado]
+                ,[FkIdentificadorUsuario]
             FROM
                 Anuncios
             ";
@@ -49,7 +53,8 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[Titulo]
                 ,[DataPublicacao]
                 ,[Preco]
-                ,[Aprovado]   
+                ,[Aprovado]
+                ,[FkIdentificadorUsuario]
             FROM
                 Anuncios
             WHERE 
@@ -63,6 +68,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[DataPublicacao] = @dataPublicacao
                 ,[Preco] = @preco
                 ,[Aprovado] = @aprovado   
+                ,[FkIdentificadorUsuario] = @fkIdentificadorUsuario
             WHERE 
                 [Identificador] = @identificador
             ;";
@@ -215,31 +221,39 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<Anuncio> ObterPorIdentificador(int identificador)
         {
-            var parametros = CreateParameters
-                .Add("@identificador", identificador, DbType.Int32)
-                .GetParameters();
+            try
+            {
+                var parametros = CreateParameters
+                    .Add("@identificador", identificador, DbType.Int32)
+                    .GetParameters();
 
-            var anuncioDTO = await UnitOfWork.Connection.QuerySingleAsync<AnuncioDTO>(SQL_OBTER_ANUNCIO, parametros);
-            var anuncio = anuncioDTO.ToAnuncio();
+                var anuncioDTO = await UnitOfWork.Connection.QuerySingleAsync<AnuncioDTO>(SQL_OBTER_ANUNCIO, parametros);
+                var anuncio = anuncioDTO.ToAnuncio();
 
-            var parametrosListas = CreateParameters
-                .Add("@identificadorAnuncio", identificador, DbType.Int32)
-                .GetParameters();
-            var topicosDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_OBTER_TOPICOS, parametrosListas);
-            var topicos = topicosDb.Parse<Topico>();
+                var parametrosListas = CreateParameters
+                    .Add("@identificadorAnuncio", identificador, DbType.Int32)
+                    .GetParameters();
+                var topicosDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_OBTER_TOPICOS, parametrosListas);
+                var topicos = topicosDb.Parse<Topico>();
 
-            var avaliacoesDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_OBTER_AVALIACOES, parametrosListas);
-            var avaliacoes = avaliacoesDb.Parse<Avaliacao>();
+                var avaliacoesDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_OBTER_AVALIACOES, parametrosListas);
+                var avaliacoes = avaliacoesDb.Parse<Avaliacao>();
 
-            var imagensDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_OBTER_IMAGENS, parametrosListas);
-            var imagens = imagensDb.Parse<Imagem>();
+                var imagensDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_OBTER_IMAGENS, parametrosListas);
+                var imagens = imagensDb.Parse<Imagem>();
 
 
-            anuncio.Avaliacoes = avaliacoes.Where(avaliacao => avaliacao.IdentificadorAnuncio == anuncio.Identificador);
-            anuncio.Images = imagens.Where(imagem => imagem.IdentificadorAnuncio == anuncio.Identificador);
-            anuncio.Topicos = topicos.Where(topico => topico.IdentificadorAnuncio == anuncio.Identificador);
+                anuncio.Avaliacoes = avaliacoes.Where(avaliacao => avaliacao.IdentificadorAnuncio == anuncio.Identificador);
+                anuncio.Images = imagens.Where(imagem => imagem.IdentificadorAnuncio == anuncio.Identificador);
+                anuncio.Topicos = topicos.Where(topico => topico.IdentificadorAnuncio == anuncio.Identificador);
 
-            return anuncio;
+                return anuncio;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         /// <summary>
@@ -254,7 +268,8 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 .Add("@titulo", anuncioDTO.Titulo, DbType.String)
                 .Add("@dataPublicacao", anuncioDTO.DataPublicacao, DbType.DateTime)
                 .Add("@preco", anuncioDTO.Preco, DbType.Double) //Se der erro, pode ser aqui  banco e floar e db type é double
-                .Add("@aprovado", anuncioDTO.Aprovado, DbType.Int16) //aqui deve dar ruim               
+                .Add("@aprovado", anuncioDTO.Aprovado, DbType.Int16) //aqui deve dar ruim
+                .Add("@fkIdentificadorUsuario", anuncioDTO.FkIdentificadorUsuario, DbType.Int16)
                .GetParameters();
             var identificadorAnuncio = await UnitOfWork.Connection.QuerySingleAsync<int>(SQL_INSERIR_ANUNCIO, parametros);
             anuncio.Identificador = identificadorAnuncio;
@@ -330,8 +345,9 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
               .Add("@dataPublicacao", anuncioDTO.DataPublicacao, DbType.DateTime)
               .Add("@preco", anuncioDTO.Preco, DbType.Double) //Se der erro, pode ser aqui  banco e floar e db type é double
               .Add("@aprovado", anuncio.Aprovado, DbType.Boolean) //aqui deve dar ruim               
-                .Add("@identificador", anuncio.Identificador, DbType.Int32)
-                .GetParameters();
+              .Add("@fkIdentificadorUsuario", anuncio.IdentificadorUsuario, DbType.Int32)
+              .Add("@identificador", anuncio.Identificador, DbType.Int32)
+              .GetParameters();
             parametros.RemoveUnused = true;
             await UnitOfWork.Connection.ExecuteAsync(SQL_ATUALIZAR_ANUNCIO, parametros);
 
@@ -349,27 +365,36 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         {
             var identificadorAnuncio = anuncio.Identificador;
             //inserir topicos
-            foreach (var topico in anuncio.Topicos)
+            if (anuncio.Topicos != null)
             {
-                topico.IdentificadorAnuncio = identificadorAnuncio;
-                var TopicoInserido = await InserirTopico(topico);
-                topico.Identificador = TopicoInserido.Identificador;
+                foreach (var topico in anuncio.Topicos)
+                {
+                    topico.IdentificadorAnuncio = identificadorAnuncio;
+                    var TopicoInserido = await InserirTopico(topico);
+                    topico.Identificador = TopicoInserido.Identificador;
+                }
             }
 
-            //inserir imagens
-            foreach (var imagem in anuncio.Images)
+            if (anuncio.Images != null)
             {
-                imagem.IdentificadorAnuncio = identificadorAnuncio;
-                var imagemInserida = await InserirImagem(imagem);
-                imagem.Identificador = imagemInserida.Identificador;
+                //inserir imagens
+                foreach (var imagem in anuncio.Images)
+                {
+                    imagem.IdentificadorAnuncio = identificadorAnuncio;
+                    var imagemInserida = await InserirImagem(imagem);
+                    imagem.Identificador = imagemInserida.Identificador;
+                }
             }
 
-            //inserir avaliaca
-            foreach (var avaliacao in anuncio.Avaliacoes)
+            if (anuncio.Avaliacoes != null)
             {
-                avaliacao.IdentificadorAnuncio = identificadorAnuncio;
-                var avaliacaoInserida = await InserirAvaliacao(avaliacao);
-                avaliacao.Identificador = avaliacaoInserida.Identificador;
+                //inserir avaliaca
+                foreach (var avaliacao in anuncio.Avaliacoes)
+                {
+                    avaliacao.IdentificadorAnuncio = identificadorAnuncio;
+                    var avaliacaoInserida = await InserirAvaliacao(avaliacao);
+                    avaliacao.Identificador = avaliacaoInserida.Identificador;
+                }
             }
 
             return anuncio;
@@ -402,7 +427,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             var anunciosDTO = anunciosDB.Parse<AnuncioDTO>().ToList();
 
             var topicosDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_LISTAR_TOPICOS);
-            var topicos = topicosDb.Parse<Topico>().ToList(); 
+            var topicos = topicosDb.Parse<Topico>().ToList();
 
             var avaliacoesDb = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_LISTAR_AVALIACOES);
             var avaliacoes = avaliacoesDb.Parse<Avaliacao>().ToList();
@@ -419,7 +444,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 anuncio.Avaliacoes = avaliacoes.Where(avaliacao => avaliacao.IdentificadorAnuncio == anuncio.Identificador);
                 anuncio.Images = imagens.Where(imagem => imagem.IdentificadorAnuncio == anuncio.Identificador);
                 anuncio.Topicos = topicos.Where(topico => topico.IdentificadorAnuncio == anuncio.Identificador);
-                anuncios =anuncios.Append(anuncio);
+                anuncios = anuncios.Append(anuncio);
             }
 
             return anuncios;

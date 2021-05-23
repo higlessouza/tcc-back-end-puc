@@ -18,7 +18,8 @@ namespace tcc_back_end_puc.Infrastructure.Mapper
                 Identificador = anuncio.Identificador,
                 DataPublicacao = anuncio.DataPublicacao,
                 Preco = anuncio.Preco,
-                Aprovado = (int)anuncio.Aprovado
+                Aprovado = (int)anuncio.Aprovado,
+                FkIdentificadorUsuario = anuncio.IdentificadorUsuario
             };
         }
         public static Anuncio ToAnuncio(this AnuncioDTO anuncioDTO, IEnumerable<Imagem> imagens, IEnumerable<Topico> topicos, IEnumerable<Avaliacao> avaliacoes)
@@ -27,6 +28,7 @@ namespace tcc_back_end_puc.Infrastructure.Mapper
             {
                 Titulo = anuncioDTO.Titulo,
                 Identificador = anuncioDTO.Identificador,
+                IdentificadorUsuario = anuncioDTO.FkIdentificadorUsuario,
                 DataPublicacao = anuncioDTO.DataPublicacao,
                 Preco = anuncioDTO.Preco,
                 Avaliacoes = avaliacoes,
@@ -44,6 +46,7 @@ namespace tcc_back_end_puc.Infrastructure.Mapper
             {
                 Titulo = anuncioDTO.Titulo,
                 Identificador = anuncioDTO.Identificador,
+                IdentificadorUsuario = anuncioDTO.FkIdentificadorUsuario,
                 DataPublicacao = anuncioDTO.DataPublicacao,
                 Preco = anuncioDTO.Preco,
                 Aprovado = (StatusAprovacaoAnuncio)anuncioDTO.Aprovado

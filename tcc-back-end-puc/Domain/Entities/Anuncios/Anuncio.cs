@@ -7,6 +7,7 @@ namespace tcc_back_end_puc.Domain.Entities.Anuncios
     public class Anuncio
     {
         public int Identificador { get; set; }
+        public int IdentificadorUsuario { get; set; }
         public string Titulo { get; set; }
         public DateTime DataPublicacao { get; set; }
 

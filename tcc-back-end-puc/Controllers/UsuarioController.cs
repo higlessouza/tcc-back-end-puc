@@ -48,7 +48,11 @@ namespace tcc_back_end_puc.Controllers
         [Route("Login")]
         public async Task<ActionResult> Login(string email, string senha)
         {
-            var usuarioLogado = await _usuarioRepository.RealizarLogin(email,senha);
+            var usuarioLogado = await _usuarioRepository.RealizarLogin(email, senha);
+
+            if (usuarioLogado == null)
+                return Unauthorized("O usuário não existe ou a senha está incorreta. Por favor, verifique e tente novamente.");
+
             return Ok(JsonConvert.SerializeObject(usuarioLogado));
         }
 

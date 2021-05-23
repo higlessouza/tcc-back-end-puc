@@ -135,10 +135,26 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             ;";
 
         private const string SQL_REALIZA_LOGIN = @"
-            SELECT 
+            SELECT
                 [Identificador]
-            FROM 
-                Usuarios 
+                ,[Nome]
+                ,[Senha]
+                ,[Email]
+                ,[Tipo]
+                ,[Facebook]
+                ,[Linkedin]
+                ,[Twitter]
+                ,[CodigoPais]
+                ,[CodigoCidade]
+                ,[Telefone]
+                ,[Rua]
+                ,[Bairro]
+                ,[Cidade]
+                ,[Estado]
+                ,[Pais]
+                ,[Cep]
+            FROM
+                Usuarios
             WHERE 
                 [Email] = @email and
                 BINARY_CHECKSUM([Senha]) = BINARY_CHECKSUM(@senha)
@@ -152,11 +168,19 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<Usuario> ObterPorIdentificador(int identificador)
         {
-            var parametros = CreateParameters
-                .Add("@identificador", identificador, DbType.Int32)
-                .GetParameters();
-            var usuarioDTO = await UnitOfWork.Connection.QuerySingleAsync<UsuarioDTO>(SQL_OBTER_USUARIO, parametros);
-            return usuarioDTO.ToUsuario();
+            try
+            {
+                var parametros = CreateParameters
+                    .Add("@identificador", identificador, DbType.Int32)
+                    .GetParameters();
+                var usuarioDTO = await UnitOfWork.Connection.QuerySingleAsync<UsuarioDTO>(SQL_OBTER_USUARIO, parametros);
+                return usuarioDTO.ToUsuario();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         /// <summary>
@@ -255,16 +279,22 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <param name="email"></param>
         /// <param name="senha"></param>
         /// <returns></returns>
-        public async Task<bool> RealizarLogin(string email, string senha)
+        public async Task<Usuario> RealizarLogin(string email, string senha)
         {
-            var parametros = CreateParameters
-              .Add("@email", email, DbType.String)
-              .Add("@senha", senha, DbType.String)
-              .GetParameters();
-
-            var identificador = await UnitOfWork.Connection.ExecuteReaderAsync(SQL_REALIZA_LOGIN, parametros);
-            //TODO: Melhorar metodo
-            return identificador.Parse<int>().Count<int>() == 1;
+            try
+            {
+                var parametros = CreateParameters
+                  .Add("@email", email, DbType.String)
+                  .Add("@senha", senha, DbType.String)
+                  .GetParameters();
+                var usuarioDTO = await UnitOfWork.Connection.QuerySingleAsync<UsuarioDTO>(SQL_REALIZA_LOGIN, parametros);
+                return usuarioDTO.ToUsuario();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
     }
 }

@@ -51,7 +51,7 @@ namespace tcc_back_end_puc.Domain.Repositories
         /// <param name="email"></param>
         /// <param name="senha"></param>
         /// <returns></returns>
-        public Task<bool> RealizarLogin(string email,string senha);
+        public Task<Usuario> RealizarLogin(string email,string senha);
 
     }
 }
