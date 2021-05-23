@@ -17,6 +17,12 @@
             </summary>
             <returns>Lista de anuncios</returns>
         </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.ListarAnunciosPorUsuarioAsync(System.Int32)">
+            <summary>
+            Listar anuncios 
+            </summary>
+            <returns>Lista de anuncios</returns>
+        </member>
         <member name="M:tcc_back_end_puc.Controllers.AnuncioController.CriarAsync(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
             <summary>
             Criar anuncio 

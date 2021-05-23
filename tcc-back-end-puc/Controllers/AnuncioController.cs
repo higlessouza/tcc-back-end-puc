@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain.Entities.Anuncios;
 using tcc_back_end_puc.Domain.Repositories;
-
+using System.Linq;
 namespace tcc_back_end_puc.Controllers
 {
     [Route("api/anuncio")]
@@ -42,6 +42,16 @@ namespace tcc_back_end_puc.Controllers
             return Ok(JsonConvert.SerializeObject(anuncios));
         }
 
+        /// <summary>
+        /// Listar anuncios 
+        /// </summary>
+        /// <returns>Lista de anuncios</returns>
+        [HttpGet("listar-por-usuario/{id}")]
+        public async Task<ActionResult> ListarAnunciosPorUsuarioAsync(int id)
+        {
+            var anuncios = (await _anuncioRepository.ListarAnuncios()).Where(anun => anun.IdentificadorUsuario == id);
+            return Ok(JsonConvert.SerializeObject(anuncios));
+        }
         /// <summary>
         /// Criar anuncio 
         /// </summary>
