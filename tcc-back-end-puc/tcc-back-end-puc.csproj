@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\140490\Documents\Higles\PUC\TCC\BackEnd\tcc-back-end-puc\tcc-back-end-puc\tcc-back-end-puc.xml</DocumentationFile>
+    <DocumentationFile>tcc-back-end-puc.xml</DocumentationFile>
     <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\140490\Documents\Higles\PUC\TCC\BackEnd\tcc-back-end-puc\tcc-back-end-puc\tcc-back-end-puc.xml</DocumentationFile>
+    <DocumentationFile>tcc-back-end-puc.xml</DocumentationFile>
     <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
