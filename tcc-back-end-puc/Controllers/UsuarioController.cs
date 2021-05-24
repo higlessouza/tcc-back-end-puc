@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain.Entities.Usuarios;
 using tcc_back_end_puc.Domain.Repositories;
+using tcc_back_end_puc.Infrastructure.Repositories;
 
 namespace tcc_back_end_puc.Controllers
 {
@@ -90,6 +91,20 @@ namespace tcc_back_end_puc.Controllers
         {
             var usuarioCriado = await _usuarioRepository.DeletarUsuario(identificador);
             return Ok(JsonConvert.SerializeObject(usuarioCriado));
+        }
+
+        /// <summary>
+        /// Envia um código de verificação para o usuário
+        /// </summary>
+        /// <returns>Lista de usuários</returns>
+        [HttpPost]
+        [Route("recuperar-senha/{email}")]
+        public async Task<ActionResult> RecuperarSenha(string email)
+        {
+            var servicoEmail = new EmailRepository();
+            var codigoRecuperacao = servicoEmail.EnviarEmail(email);
+
+            return Ok(JsonConvert.SerializeObject(codigoRecuperacao));
         }
     }
 }

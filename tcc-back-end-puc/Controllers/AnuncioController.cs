@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain.Entities.Anuncios;
 using tcc_back_end_puc.Domain.Repositories;
-using System.Linq;
+
 namespace tcc_back_end_puc.Controllers
 {
     [Route("api/anuncio")]
@@ -43,7 +44,7 @@ namespace tcc_back_end_puc.Controllers
         }
 
         /// <summary>
-        /// Listar anuncios 
+        /// Listar anuncios por usuário
         /// </summary>
         /// <returns>Lista de anuncios</returns>
         [HttpGet("listar-por-usuario/{id}")]

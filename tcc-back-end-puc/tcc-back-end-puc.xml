@@ -84,6 +84,12 @@
             <param name="identificador">Identificador do usuário a ser apagado</param>
             <returns>Bool que informa se o usuário foi apagado</returns>
         </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.RecuperarSenha(System.String)">
+            <summary>
+            Realiza login de um usuário
+            </summary>
+            <returns>Lista de usuários</returns>
+        </member>
         <member name="T:tcc_back_end_puc.Domain.Enum.StatusAprovacaoAnuncio">
             <summary>
             Enum de Status aprovacao anuncio
