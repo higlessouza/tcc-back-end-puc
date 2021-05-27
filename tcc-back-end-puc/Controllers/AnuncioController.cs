@@ -127,6 +127,18 @@ namespace tcc_back_end_puc.Controllers
         {
             await _anuncioRepository.AprovarAnuncio(id);
             return Ok(true);
+        }  
+        
+        /// <summary>
+        ///Adiciona visita em um anuncio
+        /// </summary>
+        /// <param name="id"> Identificador do anuncio a ser aprovado</param>
+        /// <returns>anuncio aprovado</returns>
+        [HttpPatch("adicionar-visita-anuncio/{id}")]
+        public async Task<ActionResult> AdicionarVisitaAsync(int id)
+        {
+            await _anuncioRepository.AdicionarVisita(id);
+            return Ok(true);
         }
 
         /// <summary>

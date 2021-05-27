@@ -10,7 +10,9 @@ namespace tcc_back_end_puc.Domain.Entities.Anuncios
         public int IdentificadorUsuario { get; set; }
         public string Titulo { get; set; }
         public DateTime DataPublicacao { get; set; }
-
+        public string Descricao { get; set; }
+        public string AreaAtuacao { get; set; }
+        public double TotalVisitas { get; set; }
         public double Preco { get; set; }
         public IEnumerable<Imagem> Images { get; set; }
         public IEnumerable<Topico> Topicos { get; set; }

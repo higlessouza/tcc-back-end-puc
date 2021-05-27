@@ -26,6 +26,9 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[Preco]
                 ,[Aprovado]
                 ,[FkIdentificadorUsuario]
+                ,[Descricao] 
+	            ,[AreaAtuacao] 
+	            ,[TotalVisitas] 
                 )
             Values (
                 @titulo
@@ -44,6 +47,9 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[Preco]
                 ,[Aprovado]
                 ,[FkIdentificadorUsuario]
+                ,[Descricao] 
+	            ,[AreaAtuacao] 
+	            ,[TotalVisitas] 
             FROM
                 Anuncios
             ";
@@ -56,6 +62,9 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[Preco]
                 ,[Aprovado]
                 ,[FkIdentificadorUsuario]
+                ,[Descricao] 
+	            ,[AreaAtuacao] 
+	            ,[TotalVisitas] 
             FROM
                 Anuncios
             WHERE 
@@ -70,9 +79,20 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[Preco] = @preco
                 ,[Aprovado] = @aprovado   
                 ,[FkIdentificadorUsuario] = @fkIdentificadorUsuario
+                ,[Descricao] = @descricao
+	            ,[AreaAtuacao] =@areaAtuacao
+	            ,[TotalVisitas] =@totalVisitas
             WHERE 
                 [Identificador] = @identificador
             ;";
+
+        private const string SQL_ADICIONAR_VISITA_ANUNCIO = @"
+            UPDATE Anuncios 
+                SET [TotalVisitas] +=1
+            WHERE 
+                [Identificador] = @identificador
+            ;";
+
 
         private const string SQL_APROVAR_ANUNCIO = @"
             UPDATE Anuncios 
@@ -360,7 +380,10 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
               .Add("@titulo", anuncioDTO.Titulo, DbType.String)
               .Add("@dataPublicacao", anuncioDTO.DataPublicacao, DbType.DateTime)
               .Add("@preco", anuncioDTO.Preco, DbType.Double) //Se der erro, pode ser aqui  banco e floar e db type é double
-              .Add("@aprovado", anuncio.Aprovado, DbType.Boolean) //aqui deve dar ruim               
+              .Add("@aprovado", anuncio.Aprovado, DbType.Int32) //aqui deve dar ruim               
+              .Add("@descricao", anuncio.Descricao, DbType.Boolean) //aqui deve dar ruim               
+              .Add("@areaAtuacao", anuncio.AreaAtuacao, DbType.Boolean) //aqui deve dar ruim               
+              .Add("@totalVisitas", anuncio.TotalVisitas, DbType.Boolean) //aqui deve dar ruim               
               .Add("@identificador", anuncio.Identificador, DbType.Int32)
               .GetParameters();
             parametros.RemoveUnused = true;
@@ -370,7 +393,6 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             anuncio = await InserirListasDoAnuncio(anuncio);
             return anuncio;
         }
-
 
         /// <summary>
         /// Aprova um usuário
@@ -385,6 +407,20 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
               .GetParameters();
             parametros.RemoveUnused = true;
             await UnitOfWork.Connection.ExecuteAsync(SQL_APROVAR_ANUNCIO, parametros);
+        }
+
+        /// <summary>
+        /// Aprova um usuário
+        /// </summary>
+        /// <param name="identificadorAnuncio"></param>
+        /// <returns></returns>
+        public async Task AdicionarVisita(int identificadorAnuncio)
+        {
+            var parametros = CreateParameters       
+              .Add("@identificador", identificadorAnuncio, DbType.Int32)
+              .GetParameters();
+            parametros.RemoveUnused = true;
+            await UnitOfWork.Connection.ExecuteAsync(SQL_ADICIONAR_VISITA_ANUNCIO, parametros);
         }
 
         /// <summary>

@@ -52,6 +52,14 @@ namespace tcc_back_end_puc.Domain.Repositories
         public Task AprovarAnuncio(int identificadorAnuncio);
 
         /// <summary>
+        /// Adiciona Visita em um anuncio
+        /// </summary>
+        /// <param name="identificadorAnuncio"></param>
+        /// <returns></returns>
+        public Task AdicionarVisita(int identificadorAnuncio);
+
+
+        /// <summary>
         /// Reprova um usuário
         /// </summary>
         public Task ReprovarAnuncio(int identificadorAnuncio);
