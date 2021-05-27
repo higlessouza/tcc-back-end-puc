@@ -10,7 +10,7 @@ namespace tcc_back_end_puc.Controllers
 {
     [Route("api/anuncio")]
     [ApiController]
-    
+
     public class AnuncioController : ControllerBase
     {
         private readonly IAnuncioRepository _anuncioRepository;
@@ -50,7 +50,6 @@ namespace tcc_back_end_puc.Controllers
         /// </summary>
         /// <returns>Lista de anuncios</returns>
         [HttpGet("listar-pendente-moderar/")]
-        [HttpGet]
         public async Task<ActionResult> ListarAnunciosPendenteModerarAsync()
         {
             var anuncios = await _anuncioRepository.ListarAnuncios();
@@ -70,10 +69,10 @@ namespace tcc_back_end_puc.Controllers
         }
 
         /// <summary>
-        ///Inserir avaliação em Anuncio
+        ///  Inserir avaliação em Anuncio
         /// </summary>
-        /// <param name="avaliacao"> Identificador do anuncio a ser aprovado</param>
-        /// <returns>anuncio aprovado</returns>
+        /// <param name="avaliacao"></param>
+        /// <returns></returns>
         [HttpPost("inserir-avaliacao/")]
         public async Task<ActionResult> InserirAvaliacaoAsync(Avaliacao avaliacao)
         {
@@ -123,10 +122,10 @@ namespace tcc_back_end_puc.Controllers
         /// </summary>
         /// <param name="IdentificadorAnuncio"> Identificador do anuncio a ser aprovado</param>
         /// <returns>anuncio aprovado</returns>
-        [HttpPatch]
-        public async Task<ActionResult> AprovarAsync(int IdentificadorAnuncio)
+        [HttpPatch("aprovar-anuncio/{id}")]
+        public async Task<ActionResult> AprovarAsync(int id)
         {
-            await _anuncioRepository.AprovarAnuncio(IdentificadorAnuncio);
+            await _anuncioRepository.AprovarAnuncio(id);
             return Ok(true);
         }
 

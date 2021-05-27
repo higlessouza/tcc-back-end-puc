@@ -313,7 +313,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <summary>
         /// Insere um Topico
         /// </summary>
-        /// <param name="topico"></param>
+        /// <param name="imagem"></param>
         /// <returns></returns>
         public async Task<Imagem> InserirImagem(Imagem imagem)
         {
@@ -350,7 +350,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <summary>
         /// Atualiza um usuário
         /// </summary>
-        /// <param name="usuario"></param>
+        /// <param name="anuncio"></param>
         /// <returns></returns>
         public async Task<Anuncio> AtualizarAnuncio(Anuncio anuncio)
         {
@@ -389,7 +389,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <summary>
         /// Insere Topicos, Imagens e Avaliacoes do anuncio
         /// </summary>
-        /// <param name="idAnuncio"></param>
+        /// <param name="anuncio"></param>
         /// <returns></returns>
         private async Task<Anuncio> InserirListasDoAnuncio(Anuncio anuncio)
         {

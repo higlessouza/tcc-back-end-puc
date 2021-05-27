@@ -9,7 +9,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
 {
     public class EmailRepository
     {
-        public int EnviarEmail(string destinatario)
+        public Task<int> EnviarEmail(string destinatario)
         {
             Random numAleatorio = new Random();
             int codigoRecuperacao = numAleatorio.Next(1000, 9999);
@@ -34,7 +34,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             };
             mail.To.Add(new MailAddress(destinatario));
             smtp.Send(mail);
-            return codigoRecuperacao;
+            return Task.FromResult(codigoRecuperacao);
         }
 
         public string ObterCorpoEmail( int codigo)

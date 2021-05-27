@@ -31,7 +31,7 @@ namespace tcc_back_end_puc.Domain.Repositories
         /// <summary>
         /// Insere um Topico
         /// </summary>
-        /// <param name="topico"></param>
+        /// <param name="imagem"></param>
         /// <returns></returns>
         public Task<Imagem> InserirImagem(Imagem imagem);
 

@@ -46,7 +46,7 @@ namespace tcc_back_end_puc.Controllers
         /// </summary>
         /// <returns>Lista de usuários</returns>
         [HttpPost]
-        [Route("Login")]
+        [Route("login")]
         public async Task<ActionResult> Login(string email, string senha)
         {
             var usuarioLogado = await _usuarioRepository.RealizarLogin(email, senha);
@@ -115,7 +115,7 @@ namespace tcc_back_end_puc.Controllers
         public async Task<ActionResult> RecuperarSenha(string email)
         {
             var servicoEmail = new EmailRepository();
-            var codigoRecuperacao = servicoEmail.EnviarEmail(email);
+            var codigoRecuperacao = await servicoEmail.EnviarEmail(email);
 
             return Ok(JsonConvert.SerializeObject(codigoRecuperacao));
         }

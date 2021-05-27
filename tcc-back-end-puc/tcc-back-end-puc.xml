@@ -30,11 +30,11 @@
             <returns>Lista de anuncios</returns>
         </member>
         <member name="M:tcc_back_end_puc.Controllers.AnuncioController.InserirAvaliacaoAsync(tcc_back_end_puc.Domain.Entities.Anuncios.Avaliacao)">
-             <summary>
-            Inserir avaliação em Anuncio
-             </summary>
-             <param name="avaliacao"> Identificador do anuncio a ser aprovado</param>
-             <returns>anuncio aprovado</returns>
+            <summary>
+             Inserir avaliação em Anuncio
+            </summary>
+            <param name="avaliacao"></param>
+            <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Controllers.AnuncioController.DeletarAvaliacaoAsync(System.Int32)">
             <summary>
@@ -178,7 +178,7 @@
             <summary>
             Insere um Topico
             </summary>
-            <param name="topico"></param>
+            <param name="imagem"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.InserirAvaliacao(tcc_back_end_puc.Domain.Entities.Anuncios.Avaliacao)">
@@ -285,7 +285,7 @@
             <summary>
             Insere um Topico
             </summary>
-            <param name="topico"></param>
+            <param name="imagem"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.InserirAvaliacao(tcc_back_end_puc.Domain.Entities.Anuncios.Avaliacao)">
@@ -299,7 +299,7 @@
             <summary>
             Atualiza um usuário
             </summary>
-            <param name="usuario"></param>
+            <param name="anuncio"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.AprovarAnuncio(System.Int32)">
@@ -313,7 +313,7 @@
             <summary>
             Insere Topicos, Imagens e Avaliacoes do anuncio
             </summary>
-            <param name="idAnuncio"></param>
+            <param name="anuncio"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.ResetarListasDoAnuncio(System.Int32)">
