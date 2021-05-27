@@ -21,7 +21,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new System.Net.NetworkCredential("tccpucminassg@gmail.com", "tccpuc#2021")
+                Credentials = new System.Net.NetworkCredential("tccpucminassg@gmail.com", "mqsigzallosybqdk")//"tccpuc#2021")
             };
 
             MailMessage mail = new MailMessage()
@@ -29,7 +29,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 From = new MailAddress("tccpucminassg@gmail.com"),
                 //.Bcc.Add(new System.Net.Mail.MailAddress(textBoxCCo.Text));
                 //.CC.Add(new System.Net.Mail.MailAddress("5544"));
-                Subject = "Reuperação de senha - TCC Puc Minas",
+                Subject = "Reuperação de senha - Marketing Go!",
                 IsBodyHtml = true,
                 Body = ObterCorpoEmail(codigoRecuperacao)
             };
@@ -50,13 +50,13 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                     </style>
                     </head>
                     <body>
-                    <img src='https://ipuc.pucminas.br/green/documentos/green/logo_pucminas.png' width = '130px'/>
+                    <img src='https://www.imagemhost.com.br/images/2021/05/27/marketingGo.png' width = '130px'/>
                     <h1> Redefinição de senha</h1>
                     <p> Olá, </p>
                     <p>Recebemos uma solicitação para restaurar sua senha de acesso em nosso site. </p> 
                     <p>Por favor, utilize o código <b>" + codigo+@"</b> para concluir a redefinição.</p>
                     <p> Atenciosamente, </p>
-                    <p> Marketing Go. </p>
+                    <p> Marketing Go! </p>
                     <img src ='https://uxyja.stripocdn.email/content/guids/CABINET_1ce849b9d6fc2f13978e163ad3c663df/images/3991592481152831.png'/>
                      </body>
                      </html>
