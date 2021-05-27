@@ -127,6 +127,13 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 [Identificador] = @identificador
             ;";
 
+        private const string SQL_ATUALIZAR_SENHA_USUARIO = @"
+            UPDATE Usuarios 
+                SET [Senha] = @senha
+            WHERE 
+                [Identificador] = @identificador
+            ;";
+
         private const string SQL_DELETA_USUARIO = @"
             DELETE FROM 
                 Usuarios 
@@ -245,6 +252,20 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             parametros.RemoveUnused = true;
             await UnitOfWork.Connection.ExecuteAsync(SQL_ATUALIZAR_USUARIO, parametros);
             return usuario;
+        }
+
+        /// <summary>
+        /// Atualiza senha de um usuário
+        /// </summary>
+        /// <param name="identificadorUsuario"></param>
+        /// <returns></returns>
+        public async Task AtualizarSenhaUsuario(int identificadorUsuario)
+        {
+            var parametros = CreateParameters
+                .Add("@identificador", identificadorUsuario, DbType.Int32)
+                .GetParameters();
+            parametros.RemoveUnused = true;
+            await UnitOfWork.Connection.ExecuteAsync(SQL_ATUALIZAR_SENHA_USUARIO, parametros);
         }
 
         /// <summary>

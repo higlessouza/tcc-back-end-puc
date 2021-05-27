@@ -58,6 +58,19 @@ namespace tcc_back_end_puc.Controllers
         }
 
         /// <summary>
+        /// Altera a senha de um usuário
+        /// </summary>
+        /// <returns>Lista de usuários</returns>
+        [HttpPut]
+        [Route("atualizar-senha/")]
+        public async Task<ActionResult> AlterarSenha(int identificadorUsuario)
+        {
+            await _usuarioRepository.AtualizarSenhaUsuario(identificadorUsuario);
+          
+            return Ok(JsonConvert.SerializeObject(true));
+        }
+
+        /// <summary>
         /// Criar usuário 
         /// </summary>
         /// <param name="usuario">Usuário a ser criado</param>

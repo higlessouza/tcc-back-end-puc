@@ -38,7 +38,7 @@ namespace tcc_back_end_puc.Domain.Repositories
         /// <summary>
         /// Insere um Topico
         /// </summary>
-        /// <param name="topico"></param>
+        /// <param name="avaliacao"></param>
         /// <returns></returns>
         public Task<Avaliacao> InserirAvaliacao(Avaliacao avaliacao);
 
@@ -46,7 +46,10 @@ namespace tcc_back_end_puc.Domain.Repositories
         /// Atualiza um usuário
         /// </summary>
         public Task<Anuncio> AtualizarAnuncio(Anuncio anuncio);
-
+        /// <summary>
+        /// Aprova um usuário
+        /// </summary>
+        public Task AprovarAnuncio(int identificadorAnuncio);
         /// <summary>
         /// Lista todos os usuários
         /// </summary>
@@ -56,6 +59,11 @@ namespace tcc_back_end_puc.Domain.Repositories
         /// Deleta usuário 
         /// </summary>
         public Task<bool> DeletarAnuncio(int identificador);
+
+        /// <summary>
+        /// Deleta Avaliacao 
+        /// </summary>
+        public Task<bool> DeletarAvaliacao(int identificador);
 
         ///// <summary>
         ///// Lista todos os anuncios que ainda não foram aprovados/rejeitados

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain.Entities.Anuncios;
+using tcc_back_end_puc.Domain.Enum;
 using tcc_back_end_puc.Domain.Repositories;
 using tcc_back_end_puc.Infrastructure.DTO;
 using tcc_back_end_puc.Infrastructure.Mapper;
@@ -69,6 +70,14 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,[Preco] = @preco
                 ,[Aprovado] = @aprovado   
                 ,[FkIdentificadorUsuario] = @fkIdentificadorUsuario
+            WHERE 
+                [Identificador] = @identificador
+            ;";
+
+        private const string SQL_APROVAR_ANUNCIO = @"
+            UPDATE Anuncios 
+                SET 
+                [Aprovado] = @aprovado   
             WHERE 
                 [Identificador] = @identificador
             ;";
@@ -212,6 +221,12 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 [FkIdentificadorAnuncio] = @identificadorAnuncio
             ;";
 
+        private const string SQL_APAGAR_AVALIACOES_POR_IDENTIFICADOR = @"
+            DELETE FROM Avaliacoes                
+            WHERE 
+                [Identificador] = @identificador
+            ;";
+
         #endregion
 
         /// <summary>
@@ -315,7 +330,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <summary>
         /// Insere um Topico
         /// </summary>
-        /// <param name="topico"></param>
+        /// <param name="avaliacao"></param>
         /// <returns></returns>
         public async Task<Avaliacao> InserirAvaliacao(Avaliacao avaliacao)
         {
@@ -345,7 +360,6 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
               .Add("@dataPublicacao", anuncioDTO.DataPublicacao, DbType.DateTime)
               .Add("@preco", anuncioDTO.Preco, DbType.Double) //Se der erro, pode ser aqui  banco e floar e db type é double
               .Add("@aprovado", anuncio.Aprovado, DbType.Boolean) //aqui deve dar ruim               
-              .Add("@fkIdentificadorUsuario", anuncio.IdentificadorUsuario, DbType.Int32)
               .Add("@identificador", anuncio.Identificador, DbType.Int32)
               .GetParameters();
             parametros.RemoveUnused = true;
@@ -354,6 +368,22 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             await ResetarListasDoAnuncio(anuncio.Identificador);
             anuncio = await InserirListasDoAnuncio(anuncio);
             return anuncio;
+        }
+
+
+        /// <summary>
+        /// Aprova um usuário
+        /// </summary>
+        /// <param name="identificadorAnuncio"></param>
+        /// <returns></returns>
+        public async Task AprovarAnuncio(int identificadorAnuncio)
+        {          
+            var parametros = CreateParameters
+              .Add("@aprovado", StatusAprovacaoAnuncio.Aprovado, DbType.Boolean) //aqui deve dar ruim               
+              .Add("@identificador", identificadorAnuncio, DbType.Int32)
+              .GetParameters();
+            parametros.RemoveUnused = true;
+            await UnitOfWork.Connection.ExecuteAsync(SQL_APROVAR_ANUNCIO, parametros);
         }
 
         /// <summary>
@@ -461,6 +491,22 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                .Add("@identificador", identificador, DbType.Int32)
                .GetParameters();
             var identificadorApagado = await UnitOfWork.Connection.ExecuteAsync(SQL_DELETA_ANUNCIO, parametros);
+
+            return (identificadorApagado == 1);
+        }
+
+
+        /// <summary>
+        /// Deleta usuário 
+        /// </summary>
+        /// <param name="identificador">Identificador usuário</param>
+        /// <returns></returns>
+        public async Task<bool> DeletarAvaliacao(int identificador)
+        {
+            var parametros = CreateParameters
+               .Add("@identificador", identificador, DbType.Int32)
+               .GetParameters();
+            var identificadorApagado = await UnitOfWork.Connection.ExecuteAsync(SQL_APAGAR_AVALIACOES_POR_IDENTIFICADOR, parametros);
 
             return (identificadorApagado == 1);
         }

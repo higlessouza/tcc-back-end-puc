@@ -17,11 +17,31 @@
             </summary>
             <returns>Lista de anuncios</returns>
         </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.ListarAnunciosPendenteModerarAsync">
+            <summary>
+            Listar anuncios pendentes moderação 
+            </summary>
+            <returns>Lista de anuncios</returns>
+        </member>
         <member name="M:tcc_back_end_puc.Controllers.AnuncioController.ListarAnunciosPorUsuarioAsync(System.Int32)">
             <summary>
             Listar anuncios por usuário
             </summary>
             <returns>Lista de anuncios</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.InserirAvaliacaoAsync(tcc_back_end_puc.Domain.Entities.Anuncios.Avaliacao)">
+             <summary>
+            Inserir avaliação em Anuncio
+             </summary>
+             <param name="avaliacao"> Identificador do anuncio a ser aprovado</param>
+             <returns>anuncio aprovado</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.DeletarAvaliacaoAsync(System.Int32)">
+            <summary>
+            Apaga uma avaliacao de acordo com o identificador
+            </summary>
+            <param name="id">Identificador do anuncio a ser apagado</param>
+            <returns>Bool que informa se o anuncio foi apagado</returns>
         </member>
         <member name="M:tcc_back_end_puc.Controllers.AnuncioController.CriarAsync(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
             <summary>
@@ -36,6 +56,13 @@
             </summary>
             <param name="anuncio"> Anuncio com dados atualizados</param>
             <returns>anuncio atualizado</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.AnuncioController.AprovarAsync(System.Int32)">
+             <summary>
+            Aprovar Anuncio
+             </summary>
+             <param name="IdentificadorAnuncio"> Identificador do anuncio a ser aprovado</param>
+             <returns>anuncio aprovado</returns>
         </member>
         <member name="M:tcc_back_end_puc.Controllers.AnuncioController.DeletarAsync(System.Int32)">
             <summary>
@@ -60,6 +87,12 @@
         <member name="M:tcc_back_end_puc.Controllers.UsuarioController.Login(System.String,System.String)">
             <summary>
             Realiza login de um usuário
+            </summary>
+            <returns>Lista de usuários</returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.AlterarSenha(System.Int32)">
+            <summary>
+            Altera a senha de um usuário
             </summary>
             <returns>Lista de usuários</returns>
         </member>
@@ -152,12 +185,17 @@
             <summary>
             Insere um Topico
             </summary>
-            <param name="topico"></param>
+            <param name="avaliacao"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.AtualizarAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
             <summary>
             Atualiza um usuário
+            </summary>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.AprovarAnuncio(System.Int32)">
+            <summary>
+            Aprova um usuário
             </summary>
         </member>
         <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.ListarAnuncios">
@@ -168,6 +206,11 @@
         <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.DeletarAnuncio(System.Int32)">
             <summary>
             Deleta usuário 
+            </summary>
+        </member>
+        <member name="M:tcc_back_end_puc.Domain.Repositories.IAnuncioRepository.DeletarAvaliacao(System.Int32)">
+            <summary>
+            Deleta Avaliacao 
             </summary>
         </member>
         <member name="T:tcc_back_end_puc.Domain.Repositories.IUsuarioRepository">
@@ -249,7 +292,7 @@
             <summary>
             Insere um Topico
             </summary>
-            <param name="topico"></param>
+            <param name="avaliacao"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.AtualizarAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
@@ -257,6 +300,13 @@
             Atualiza um usuário
             </summary>
             <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.AprovarAnuncio(System.Int32)">
+            <summary>
+            Aprova um usuário
+            </summary>
+            <param name="identificadorAnuncio"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.InserirListasDoAnuncio(tcc_back_end_puc.Domain.Entities.Anuncios.Anuncio)">
@@ -286,6 +336,13 @@
             <param name="identificador">Identificador usuário</param>
             <returns></returns>
         </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.AnuncioRepository.DeletarAvaliacao(System.Int32)">
+            <summary>
+            Deleta usuário 
+            </summary>
+            <param name="identificador">Identificador usuário</param>
+            <returns></returns>
+        </member>
         <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.ObterPorIdentificador(System.Int32)">
             <summary>
             Obtem usuario pelo identificador 
@@ -305,6 +362,13 @@
             Atualiza um usuário
             </summary>
             <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.AtualizarSenhaUsuario(System.Int32)">
+            <summary>
+            Atualiza senha de um usuário
+            </summary>
+            <param name="identificadorUsuario"></param>
             <returns></returns>
         </member>
         <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.ListarUsuarios">

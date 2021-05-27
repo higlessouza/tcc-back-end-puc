@@ -51,12 +51,12 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                     <body>
                     <img src='https://ipuc.pucminas.br/green/documentos/green/logo_pucminas.png' width = '130px'/>
                     <h1> Redefinição de senha</h1>
-                    <p> Olá, 
-                    Recebemos uma solicitação para restaurar sua senha de acesso em nosso site.  
-                    Por favor, utilize o código <b>"+codigo+@"</b> para concluir a redefinição.</p>
+                    <p> Olá, </p>
+                    <p>Recebemos uma solicitação para restaurar sua senha de acesso em nosso site. </p> 
+                    <p>Por favor, utilize o código <b>" + codigo+@"</b> para concluir a redefinição.</p>
                     <p> Atenciosamente, </p>
-                    <p> TCC Puc Minas, </p>
-                    <img src ='https://uxyja.stripocdn.email/content/guids/CABINET_1ce849b9d6fc2f13978e163ad3c663df/images/3991592481152831.png' width = '100%'/>
+                    <p> Marketing Go. </p>
+                    <img src ='https://uxyja.stripocdn.email/content/guids/CABINET_1ce849b9d6fc2f13978e163ad3c663df/images/3991592481152831.png'/>
                      </body>
                      </html>
           ";

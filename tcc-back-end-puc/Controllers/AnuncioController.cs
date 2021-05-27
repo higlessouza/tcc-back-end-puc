@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain.Entities.Anuncios;
+using tcc_back_end_puc.Domain.Enum;
 using tcc_back_end_puc.Domain.Repositories;
 
 namespace tcc_back_end_puc.Controllers
@@ -40,6 +41,20 @@ namespace tcc_back_end_puc.Controllers
         public async Task<ActionResult> ListarAnunciosAsync()
         {
             var anuncios = await _anuncioRepository.ListarAnuncios();
+            anuncios = anuncios.Where(anun => anun.Aprovado == StatusAprovacaoAnuncio.Aprovado);
+            return Ok(JsonConvert.SerializeObject(anuncios));
+        }
+
+        /// <summary>
+        /// Listar anuncios pendentes moderação 
+        /// </summary>
+        /// <returns>Lista de anuncios</returns>
+        [HttpGet("listar-pendente-moderar/")]
+        [HttpGet]
+        public async Task<ActionResult> ListarAnunciosPendenteModerarAsync()
+        {
+            var anuncios = await _anuncioRepository.ListarAnuncios();
+            anuncios = anuncios.Where(anun => anun.Aprovado == StatusAprovacaoAnuncio.Pendente);
             return Ok(JsonConvert.SerializeObject(anuncios));
         }
 
@@ -53,6 +68,31 @@ namespace tcc_back_end_puc.Controllers
             var anuncios = (await _anuncioRepository.ListarAnuncios()).Where(anun => anun.IdentificadorUsuario == id);
             return Ok(JsonConvert.SerializeObject(anuncios));
         }
+
+        /// <summary>
+        ///Inserir avaliação em Anuncio
+        /// </summary>
+        /// <param name="avaliacao"> Identificador do anuncio a ser aprovado</param>
+        /// <returns>anuncio aprovado</returns>
+        [HttpPost("inserir-avaliacao/")]
+        public async Task<ActionResult> InserirAvaliacaoAsync(Avaliacao avaliacao)
+        {
+            var avaliacaoInserida = await _anuncioRepository.InserirAvaliacao(avaliacao);
+            return Ok(avaliacaoInserida);
+        }
+
+        /// <summary>
+        /// Apaga uma avaliacao de acordo com o identificador
+        /// </summary>
+        /// <param name="id">Identificador do anuncio a ser apagado</param>
+        /// <returns>Bool que informa se o anuncio foi apagado</returns>
+        [HttpDelete("apagar-avaliacao/{id}")]
+        public async Task<ActionResult> DeletarAvaliacaoAsync(int id)
+        {
+            var apagado = await _anuncioRepository.DeletarAvaliacao(id);
+            return Ok(JsonConvert.SerializeObject(apagado));
+        }
+
         /// <summary>
         /// Criar anuncio 
         /// </summary>
@@ -77,6 +117,19 @@ namespace tcc_back_end_puc.Controllers
             return Ok(JsonConvert.SerializeObject(anuncioAtualizado));
         }
 
+
+        /// <summary>
+        ///Aprovar Anuncio
+        /// </summary>
+        /// <param name="IdentificadorAnuncio"> Identificador do anuncio a ser aprovado</param>
+        /// <returns>anuncio aprovado</returns>
+        [HttpPatch]
+        public async Task<ActionResult> AprovarAsync(int IdentificadorAnuncio)
+        {
+            await _anuncioRepository.AprovarAnuncio(IdentificadorAnuncio);
+            return Ok(true);
+        }
+
         /// <summary>
         /// Apaga um anuncio de acordo com o identificador
         /// </summary>
@@ -85,8 +138,8 @@ namespace tcc_back_end_puc.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletarAsync(int id)
         {
-            var anuncioCriado = await _anuncioRepository.DeletarAnuncio(id);
-            return Ok(JsonConvert.SerializeObject(anuncioCriado));
+            var apagado = await _anuncioRepository.DeletarAnuncio(id);
+            return Ok(JsonConvert.SerializeObject(apagado));
         }
     }
 }
