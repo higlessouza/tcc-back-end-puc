@@ -19,7 +19,10 @@ namespace tcc_back_end_puc.Infrastructure.Mapper
                 DataPublicacao = anuncio.DataPublicacao,
                 Preco = anuncio.Preco,
                 Aprovado = (int)anuncio.Aprovado,
-                FkIdentificadorUsuario = anuncio.IdentificadorUsuario
+                FkIdentificadorUsuario = anuncio.IdentificadorUsuario,
+                AreaAtuacao = anuncio.AreaAtuacao,
+                Descricao = anuncio.Descricao,
+                TotalVisitas = anuncio.TotalVisitas
             };
         }
         public static Anuncio ToAnuncio(this AnuncioDTO anuncioDTO, IEnumerable<Imagem> imagens, IEnumerable<Topico> topicos, IEnumerable<Avaliacao> avaliacoes)
@@ -34,7 +37,10 @@ namespace tcc_back_end_puc.Infrastructure.Mapper
                 Avaliacoes = avaliacoes,
                 Images = imagens,
                 Topicos = topicos,
-                Aprovado = (StatusAprovacaoAnuncio)anuncioDTO.Aprovado
+                Aprovado = (StatusAprovacaoAnuncio)anuncioDTO.Aprovado,
+                AreaAtuacao = anuncioDTO.AreaAtuacao,
+                Descricao = anuncioDTO.Descricao,
+                TotalVisitas = anuncioDTO.TotalVisitas 
             };
 
             return anuncio;
@@ -49,7 +55,10 @@ namespace tcc_back_end_puc.Infrastructure.Mapper
                 IdentificadorUsuario = anuncioDTO.FkIdentificadorUsuario,
                 DataPublicacao = anuncioDTO.DataPublicacao,
                 Preco = anuncioDTO.Preco,
-                Aprovado = (StatusAprovacaoAnuncio)anuncioDTO.Aprovado
+                Aprovado = (StatusAprovacaoAnuncio)anuncioDTO.Aprovado,
+                AreaAtuacao = anuncioDTO.AreaAtuacao,
+                Descricao = anuncioDTO.Descricao,
+                TotalVisitas = anuncioDTO.TotalVisitas
             };
 
             return anuncio;

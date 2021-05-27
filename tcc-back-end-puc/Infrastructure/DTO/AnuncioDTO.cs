@@ -14,5 +14,8 @@ namespace tcc_back_end_puc.Infrastructure.DTO
         public DateTime DataPublicacao { get; set; }
         public double Preco { get; set; }
         public int Aprovado { get; set; }
+        public string Descricao { get; set; }
+        public string AreaAtuacao { get; set; }
+        public double TotalVisitas { get; set; }
     }
 }

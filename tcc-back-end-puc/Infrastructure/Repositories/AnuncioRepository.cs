@@ -38,7 +38,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,@fkIdentificadorUsuario
                 ,@descricao       
                 ,@areaAtuacao            
-                ,@totalVisitas   
+                ,0   
             );
             SELECT SCOPE_IDENTITY();";
 
@@ -310,7 +310,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 .Add("@aprovado", anuncioDTO.Aprovado, DbType.Int16) //aqui deve dar ruim
                 .Add("@descricao", anuncio.Descricao, DbType.String) //aqui deve dar ruim               
                 .Add("@areaAtuacao", anuncio.AreaAtuacao, DbType.String) //aqui deve dar ruim               
-                .Add("@totalVisitas", anuncio.TotalVisitas, DbType.String) //aqui deve dar ruim     
+                //.Add("@totalVisitas", anuncio.TotalVisitas, DbType.String) //aqui deve dar ruim     
                 .Add("@fkIdentificadorUsuario", anuncioDTO.FkIdentificadorUsuario, DbType.Int16)
                .GetParameters();
             var identificadorAnuncio = await UnitOfWork.Connection.QuerySingleAsync<int>(SQL_INSERIR_ANUNCIO, parametros);
