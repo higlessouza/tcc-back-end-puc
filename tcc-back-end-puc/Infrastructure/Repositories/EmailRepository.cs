@@ -19,6 +19,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 Host = "smtp.gmail.com",
                 Port = 587,
                 EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
                 Credentials = new System.Net.NetworkCredential("tccpucminassg@gmail.com", "tccpuc#2021")
             };

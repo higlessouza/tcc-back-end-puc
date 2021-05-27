@@ -380,7 +380,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         public async Task AprovarAnuncio(int identificadorAnuncio)
         {
             var parametros = CreateParameters
-              .Add("@aprovado", StatusAprovacaoAnuncio.Aprovado, DbType.Boolean) //aqui deve dar ruim               
+              .Add("@aprovado", StatusAprovacaoAnuncio.Aprovado, DbType.Int32) //aqui deve dar ruim               
               .Add("@identificador", identificadorAnuncio, DbType.Int32)
               .GetParameters();
             parametros.RemoveUnused = true;
@@ -395,7 +395,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         public async Task ReprovarAnuncio(int identificadorAnuncio)
         {
             var parametros = CreateParameters
-              .Add("@aprovado", StatusAprovacaoAnuncio.reprovado, DbType.Boolean) //aqui deve dar ruim               
+              .Add("@aprovado", StatusAprovacaoAnuncio.reprovado, DbType.Int32) //aqui deve dar ruim               
               .Add("@identificador", identificadorAnuncio, DbType.Int32)
               .GetParameters();
             parametros.RemoveUnused = true;
