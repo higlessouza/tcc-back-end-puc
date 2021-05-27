@@ -50,6 +50,12 @@ namespace tcc_back_end_puc.Domain.Repositories
         /// Aprova um usuário
         /// </summary>
         public Task AprovarAnuncio(int identificadorAnuncio);
+
+        /// <summary>
+        /// Reprova um usuário
+        /// </summary>
+        public Task ReprovarAnuncio(int identificadorAnuncio);
+
         /// <summary>
         /// Lista todos os usuários
         /// </summary>

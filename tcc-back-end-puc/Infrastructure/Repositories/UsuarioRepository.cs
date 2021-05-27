@@ -257,10 +257,12 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// Atualiza senha de um usuário
         /// </summary>
         /// <param name="identificadorUsuario"></param>
+        /// <param name="senha"></param>
         /// <returns></returns>
-        public async Task AtualizarSenhaUsuario(int identificadorUsuario)
+        public async Task AtualizarSenhaUsuario(int identificadorUsuario, string senha)
         {
             var parametros = CreateParameters
+                .Add("@senha", senha, DbType.String)
                 .Add("@identificador", identificadorUsuario, DbType.Int32)
                 .GetParameters();
             parametros.RemoveUnused = true;

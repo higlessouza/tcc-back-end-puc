@@ -205,7 +205,8 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
 
         private const string SQL_OBTER_AVALIACOES = @"
             SELECT
-	            [Nome]
+                 [Identificador]
+	            ,[Nome]
                 ,[Comentario]
                 ,[Nota]
                 ,[FkIdentificadorAnuncio] AS IdentificadorAnuncio   
@@ -380,6 +381,21 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         {
             var parametros = CreateParameters
               .Add("@aprovado", StatusAprovacaoAnuncio.Aprovado, DbType.Boolean) //aqui deve dar ruim               
+              .Add("@identificador", identificadorAnuncio, DbType.Int32)
+              .GetParameters();
+            parametros.RemoveUnused = true;
+            await UnitOfWork.Connection.ExecuteAsync(SQL_APROVAR_ANUNCIO, parametros);
+        }
+
+        /// <summary>
+        /// Reprova um usuário
+        /// </summary>
+        /// <param name="identificadorAnuncio"></param>
+        /// <returns></returns>
+        public async Task ReprovarAnuncio(int identificadorAnuncio)
+        {
+            var parametros = CreateParameters
+              .Add("@aprovado", StatusAprovacaoAnuncio.reprovado, DbType.Boolean) //aqui deve dar ruim               
               .Add("@identificador", identificadorAnuncio, DbType.Int32)
               .GetParameters();
             parametros.RemoveUnused = true;

@@ -120,12 +120,24 @@ namespace tcc_back_end_puc.Controllers
         /// <summary>
         ///Aprovar Anuncio
         /// </summary>
-        /// <param name="IdentificadorAnuncio"> Identificador do anuncio a ser aprovado</param>
+        /// <param name="id"> Identificador do anuncio a ser aprovado</param>
         /// <returns>anuncio aprovado</returns>
         [HttpPatch("aprovar-anuncio/{id}")]
         public async Task<ActionResult> AprovarAsync(int id)
         {
             await _anuncioRepository.AprovarAnuncio(id);
+            return Ok(true);
+        }
+
+        /// <summary>
+        ///Reprovar Anuncio
+        /// </summary>
+        /// <param name="id"> Identificador do anuncio a ser aprovado</param>
+        /// <returns>anuncio aprovado</returns>
+        [HttpPatch("reprovar-anuncio/{id}")]
+        public async Task<ActionResult> ReprovarAsync(int id)
+        {
+            await _anuncioRepository.ReprovarAnuncio(id);
             return Ok(true);
         }
 
