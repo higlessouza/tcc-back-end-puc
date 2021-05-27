@@ -36,6 +36,9 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,@preco
                 ,@aprovado 
                 ,@fkIdentificadorUsuario
+                ,@descricao       
+                ,@areaAtuacao,            
+                ,@totalVisitas   
             );
             SELECT SCOPE_IDENTITY();";
 
@@ -305,6 +308,9 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 .Add("@dataPublicacao", anuncioDTO.DataPublicacao, DbType.DateTime)
                 .Add("@preco", anuncioDTO.Preco, DbType.Double) //Se der erro, pode ser aqui  banco e floar e db type é double
                 .Add("@aprovado", anuncioDTO.Aprovado, DbType.Int16) //aqui deve dar ruim
+                .Add("@descricao", anuncio.Descricao, DbType.Boolean) //aqui deve dar ruim               
+                .Add("@areaAtuacao", anuncio.AreaAtuacao, DbType.Boolean) //aqui deve dar ruim               
+                .Add("@totalVisitas", anuncio.TotalVisitas, DbType.Boolean) //aqui deve dar ruim     
                 .Add("@fkIdentificadorUsuario", anuncioDTO.FkIdentificadorUsuario, DbType.Int16)
                .GetParameters();
             var identificadorAnuncio = await UnitOfWork.Connection.QuerySingleAsync<int>(SQL_INSERIR_ANUNCIO, parametros);
@@ -416,7 +422,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task AdicionarVisita(int identificadorAnuncio)
         {
-            var parametros = CreateParameters       
+            var parametros = CreateParameters
               .Add("@identificador", identificadorAnuncio, DbType.Int32)
               .GetParameters();
             parametros.RemoveUnused = true;
