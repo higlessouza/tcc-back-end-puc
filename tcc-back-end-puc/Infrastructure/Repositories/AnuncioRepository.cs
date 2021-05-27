@@ -37,7 +37,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
                 ,@aprovado 
                 ,@fkIdentificadorUsuario
                 ,@descricao       
-                ,@areaAtuacao,            
+                ,@areaAtuacao            
                 ,@totalVisitas   
             );
             SELECT SCOPE_IDENTITY();";
