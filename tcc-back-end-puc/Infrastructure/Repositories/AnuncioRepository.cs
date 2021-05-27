@@ -377,7 +377,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <param name="identificadorAnuncio"></param>
         /// <returns></returns>
         public async Task AprovarAnuncio(int identificadorAnuncio)
-        {          
+        {
             var parametros = CreateParameters
               .Add("@aprovado", StatusAprovacaoAnuncio.Aprovado, DbType.Boolean) //aqui deve dar ruim               
               .Add("@identificador", identificadorAnuncio, DbType.Int32)
@@ -397,34 +397,37 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             //inserir topicos
             if (anuncio.Topicos != null)
             {
-                foreach (var topico in anuncio.Topicos)
-                {
-                    topico.IdentificadorAnuncio = identificadorAnuncio;
-                    var TopicoInserido = await InserirTopico(topico);
-                    topico.Identificador = TopicoInserido.Identificador;
-                }
+                if (anuncio.Topicos.Any())
+                    foreach (var topico in anuncio.Topicos)
+                    {
+                        topico.IdentificadorAnuncio = identificadorAnuncio;
+                        var TopicoInserido = await InserirTopico(topico);
+                        topico.Identificador = TopicoInserido.Identificador;
+                    }
             }
 
             if (anuncio.Images != null)
             {
                 //inserir imagens
-                foreach (var imagem in anuncio.Images)
-                {
-                    imagem.IdentificadorAnuncio = identificadorAnuncio;
-                    var imagemInserida = await InserirImagem(imagem);
-                    imagem.Identificador = imagemInserida.Identificador;
-                }
+                if (anuncio.Images.Any())
+                    foreach (var imagem in anuncio.Images)
+                    {
+                        imagem.IdentificadorAnuncio = identificadorAnuncio;
+                        var imagemInserida = await InserirImagem(imagem);
+                        imagem.Identificador = imagemInserida.Identificador;
+                    }
             }
 
             if (anuncio.Avaliacoes != null)
             {
                 //inserir avaliaca
-                foreach (var avaliacao in anuncio.Avaliacoes)
-                {
-                    avaliacao.IdentificadorAnuncio = identificadorAnuncio;
-                    var avaliacaoInserida = await InserirAvaliacao(avaliacao);
-                    avaliacao.Identificador = avaliacaoInserida.Identificador;
-                }
+                if (anuncio.Avaliacoes.Any())
+                    foreach (var avaliacao in anuncio.Avaliacoes)
+                    {
+                        avaliacao.IdentificadorAnuncio = identificadorAnuncio;
+                        var avaliacaoInserida = await InserirAvaliacao(avaliacao);
+                        avaliacao.Identificador = avaliacaoInserida.Identificador;
+                    }
             }
 
             return anuncio;

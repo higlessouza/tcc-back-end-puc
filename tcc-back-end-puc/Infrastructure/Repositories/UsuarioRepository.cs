@@ -108,7 +108,6 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         private const string SQL_ATUALIZAR_USUARIO = @"
             UPDATE Usuarios 
                 SET [Nome] = @nome,
-                    [Senha] = @senha,
                     [Email] = @email,
                     [Tipo] = @tipo,
                     [Facebook] = @facebook,   
