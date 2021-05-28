@@ -82,8 +82,9 @@ namespace tcc_back_end_puc.Controllers
         {
             var avaliacaoInserida = await _anuncioRepository.InserirAvaliacao(avaliacao);
             
+            var anuncio = await _anuncioRepository.ObterPorIdentificador(avaliacao.IdentificadorAnuncio);
             var servicoEmail = new EmailRepository();
-            var usuario = _usuarioRepository.ObterPorIdentificador(avaliacao.IdentificadorAnuncio);
+            var usuario = _usuarioRepository.ObterPorIdentificador(anuncio.IdentificadorUsuario);
             _ = servicoEmail.EnviarEmailNovaAvaliacao(avaliacao, usuario);
 
             return Ok(avaliacaoInserida);
