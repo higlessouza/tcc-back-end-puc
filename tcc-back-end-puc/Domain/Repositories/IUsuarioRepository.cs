@@ -53,7 +53,7 @@ namespace tcc_back_end_puc.Domain.Repositories
         /// <returns></returns>
         public Task<Usuario> RealizarLogin(string email,string senha);
 
-        public Task AtualizarSenhaUsuario(int identificadorUsuario,string senha);
+        public Task AtualizarSenhaUsuario(string email,string senha);
 
     }
 }

@@ -104,7 +104,7 @@
             </summary>
             <returns>Lista de usuários</returns>
         </member>
-        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.AlterarSenha(System.Int32,System.String)">
+        <member name="M:tcc_back_end_puc.Controllers.UsuarioController.AlterarSenha(System.String,System.String)">
             <summary>
             Altera a senha de um usuário
             </summary>
@@ -404,7 +404,7 @@
             <param name="usuario"></param>
             <returns></returns>
         </member>
-        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.AtualizarSenhaUsuario(System.Int32,System.String)">
+        <member name="M:tcc_back_end_puc.Infrastructure.Repositories.UsuarioRepository.AtualizarSenhaUsuario(System.String,System.String)">
             <summary>
             Atualiza senha de um usuário
             </summary>

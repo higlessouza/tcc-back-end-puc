@@ -130,7 +130,7 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             UPDATE Usuarios 
                 SET [Senha] = @senha
             WHERE 
-                [Identificador] = @identificador
+                [Email] = @email
             ;";
 
         private const string SQL_DELETA_USUARIO = @"
@@ -259,11 +259,11 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <param name="identificadorUsuario"></param>
         /// <param name="senha"></param>
         /// <returns></returns>
-        public async Task AtualizarSenhaUsuario(int identificadorUsuario, string senha)
+        public async Task AtualizarSenhaUsuario(string email, string senha)
         {
             var parametros = CreateParameters
                 .Add("@senha", senha, DbType.String)
-                .Add("@identificador", identificadorUsuario, DbType.Int32)
+                .Add("@email", email, DbType.String)
                 .GetParameters();
             parametros.RemoveUnused = true;
             await UnitOfWork.Connection.ExecuteAsync(SQL_ATUALIZAR_SENHA_USUARIO, parametros);

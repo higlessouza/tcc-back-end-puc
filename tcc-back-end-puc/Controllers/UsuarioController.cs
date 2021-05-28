@@ -63,9 +63,9 @@ namespace tcc_back_end_puc.Controllers
         /// <returns>Lista de usuários</returns>
         [HttpPut]
         [Route("atualizar-senha/")]
-        public async Task<ActionResult> AlterarSenha(int identificadorUsuario, string senha)
+        public async Task<ActionResult> AlterarSenha(string email, string senha)
         {
-            await _usuarioRepository.AtualizarSenhaUsuario(identificadorUsuario, senha);
+            await _usuarioRepository.AtualizarSenhaUsuario(email, senha);
 
             return Ok(JsonConvert.SerializeObject(true));
         }
