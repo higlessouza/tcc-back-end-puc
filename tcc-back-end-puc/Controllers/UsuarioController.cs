@@ -115,7 +115,7 @@ namespace tcc_back_end_puc.Controllers
         public async Task<ActionResult> RecuperarSenha(string email)
         {
             var servicoEmail = new EmailRepository();
-            var codigoRecuperacao = await servicoEmail.EnviarEmail(email);
+            var codigoRecuperacao = await servicoEmail.EnviarEmailRecuperacaoSenha(email);
 
             return Ok(JsonConvert.SerializeObject(codigoRecuperacao));
         }

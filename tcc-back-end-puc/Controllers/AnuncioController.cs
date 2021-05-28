@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain.Entities.Anuncios;
+using tcc_back_end_puc.Domain.Entities.Usuarios;
 using tcc_back_end_puc.Domain.Enum;
 using tcc_back_end_puc.Domain.Repositories;
+using tcc_back_end_puc.Infrastructure.Repositories;
 
 namespace tcc_back_end_puc.Controllers
 {
@@ -14,10 +16,12 @@ namespace tcc_back_end_puc.Controllers
     public class AnuncioController : ControllerBase
     {
         private readonly IAnuncioRepository _anuncioRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
-        public AnuncioController(IAnuncioRepository anuncioRepository)
+        public AnuncioController(IAnuncioRepository anuncioRepository, IUsuarioRepository usuarioRepository)
         {
             _anuncioRepository = anuncioRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
 
@@ -77,6 +81,11 @@ namespace tcc_back_end_puc.Controllers
         public async Task<ActionResult> InserirAvaliacaoAsync(Avaliacao avaliacao)
         {
             var avaliacaoInserida = await _anuncioRepository.InserirAvaliacao(avaliacao);
+            
+            var servicoEmail = new EmailRepository();
+            var usuario = _usuarioRepository.ObterPorIdentificador(avaliacao.Identificador);
+            _ = servicoEmail.EnviarEmailNovaAvaliacao(avaliacao, usuario);
+
             return Ok(avaliacaoInserida);
         }
 
@@ -101,7 +110,12 @@ namespace tcc_back_end_puc.Controllers
         public async Task<ActionResult> CriarAsync(Anuncio anuncio)
         {
             var anuncioCriado = await _anuncioRepository.InserirAnuncio(anuncio);
-            return Ok(JsonConvert.SerializeObject(anuncioCriado));
+
+            var servicoEmail = new EmailRepository();
+            var usuario =  _usuarioRepository.ObterPorIdentificador(anuncio.Identificador);
+            _ = servicoEmail.EnviarEmailNovoAnuncio(anuncio, usuario);
+
+            return Ok(JsonConvert.SerializeObject(anuncio));
         }
 
         /// <summary>
