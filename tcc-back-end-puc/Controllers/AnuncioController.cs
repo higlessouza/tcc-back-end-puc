@@ -83,7 +83,7 @@ namespace tcc_back_end_puc.Controllers
             var avaliacaoInserida = await _anuncioRepository.InserirAvaliacao(avaliacao);
             
             var servicoEmail = new EmailRepository();
-            var usuario = _usuarioRepository.ObterPorIdentificador(avaliacao.Identificador);
+            var usuario = _usuarioRepository.ObterPorIdentificador(avaliacao.IdentificadorAnuncio);
             _ = servicoEmail.EnviarEmailNovaAvaliacao(avaliacao, usuario);
 
             return Ok(avaliacaoInserida);
@@ -110,12 +110,7 @@ namespace tcc_back_end_puc.Controllers
         public async Task<ActionResult> CriarAsync(Anuncio anuncio)
         {
             var anuncioCriado = await _anuncioRepository.InserirAnuncio(anuncio);
-
-            var servicoEmail = new EmailRepository();
-            var usuario =  _usuarioRepository.ObterPorIdentificador(anuncio.Identificador);
-            _ = servicoEmail.EnviarEmailNovoAnuncio(anuncio, usuario);
-
-            return Ok(JsonConvert.SerializeObject(anuncio));
+            return Ok(JsonConvert.SerializeObject(anuncioCriado));
         }
 
         /// <summary>
@@ -140,6 +135,13 @@ namespace tcc_back_end_puc.Controllers
         public async Task<ActionResult> AprovarAsync(int id)
         {
             await _anuncioRepository.AprovarAnuncio(id);
+
+            var anuncio = await _anuncioRepository.ObterPorIdentificador(id);
+
+            var servicoEmail = new EmailRepository();
+            var usuario = _usuarioRepository.ObterPorIdentificador(anuncio.IdentificadorUsuario);
+            _ = servicoEmail.EnviarEmailNovoAnuncio(anuncio, usuario);
+
             return Ok(true);
         }  
         
