@@ -4,6 +4,8 @@ namespace tcc_back_end_puc.Domain
 {
     public class Parametros
     {
+        public static string Token => "737a4febef284f73b8fbe83857e6b7f4";
+
         /// <summary>
         /// Parâmetros do Sql Server
         /// </summary>
@@ -21,6 +23,7 @@ namespace tcc_back_end_puc.Domain
             /// Senha do banco de dados
             /// </summary>
             public static string Senha => Environment.GetEnvironmentVariable("DB_TCC_PASSWORD");
+
         }
     }
 }

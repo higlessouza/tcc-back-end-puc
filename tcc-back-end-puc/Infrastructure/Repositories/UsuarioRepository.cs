@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using tcc_back_end_puc.Domain.Entities.Usuarios;
 using tcc_back_end_puc.Domain.Repositories;
+using tcc_back_end_puc.Infrastructure.Common;
 using tcc_back_end_puc.Infrastructure.DTO;
 using tcc_back_end_puc.Infrastructure.Mapper;
 using tcc_back_end_puc.Infrastructure.Repositories.Base;
@@ -197,9 +198,13 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         public async Task<Usuario> InserirUsuario(Usuario usuario)
         {
             var usuarioDTO = usuario.ToUsuarioDTO();
+
+            Aes256 AES = new Aes256();
+            var senhaCriptografada = AES.Encrypt(usuarioDTO.Senha);
+
             var parametros = CreateParameters
                 .Add("@nome", usuarioDTO.Nome, DbType.String)
-                .Add("@senha", usuarioDTO.Senha, DbType.String)
+                .Add("@senha", senhaCriptografada, DbType.String)
                 .Add("@email", usuarioDTO.Email, DbType.String)
                 .Add("@tipo", usuarioDTO.Tipo, DbType.Int32)
                 .Add("@facebook", usuarioDTO.Facebook, DbType.String)
@@ -231,7 +236,6 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
             var usuarioDTO = usuario.ToUsuarioDTO();
             var parametros = CreateParameters
                 .Add("@nome", usuarioDTO.Nome, DbType.String)
-                .Add("@senha", usuarioDTO.Senha, DbType.String)
                 .Add("@email", usuarioDTO.Email, DbType.String)
                 .Add("@tipo", usuarioDTO.Tipo, DbType.Int32)
                 .Add("@facebook", usuarioDTO.Facebook, DbType.String)
@@ -261,8 +265,12 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task AtualizarSenhaUsuario(string email, string senha)
         {
+            Aes256 AES = new Aes256();
+            var senhaCriptografada = AES.Encrypt(senha);
+
+
             var parametros = CreateParameters
-                .Add("@senha", senha, DbType.String)
+                .Add("@senha", senhaCriptografada, DbType.String)
                 .Add("@email", email, DbType.String)
                 .GetParameters();
             parametros.RemoveUnused = true;
@@ -303,11 +311,14 @@ namespace tcc_back_end_puc.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<Usuario> RealizarLogin(string email, string senha)
         {
+            Aes256 AES = new Aes256();
+            var senhaCriptografada = AES.Encrypt(senha);
+
             try
             {
                 var parametros = CreateParameters
                   .Add("@email", email, DbType.String)
-                  .Add("@senha", senha, DbType.String)
+                  .Add("@senha", senhaCriptografada, DbType.String)
                   .GetParameters();
                 var usuarioDTO = await UnitOfWork.Connection.QuerySingleAsync<UsuarioDTO>(SQL_REALIZA_LOGIN, parametros);
                 return usuarioDTO.ToUsuario();
